@@ -1,44 +1,62 @@
-import { Server, BookOpen } from 'lucide-react'
+import React, { useState } from 'react';
+// IMPORTACIÓN DE COMPONENTES EXIGIDOS EN LA RÚBRICA
+import Inicio from './components/Inicio';
+import Instalacion from './components/Instalacion';
+import ActiveDirectory from './components/ActiveDirectory';
+import Cliente from './components/Cliente';
+import ServiciosRed from './components/ServiciosRed';
+import Gpo from './components/Gpo';
+import Prompts from './components/Prompts';
 
-function App() {
+export default function App() {
+  const [seccionActual, setSeccionActual] = useState('inicio');
+
+  // FUNCIÓN PARA RENDERIZAR LA PANTALLA SEGÚN EL MENÚ SELECCIONADO
+  const renderPantalla = () => {
+    switch (seccionActual) {
+      case 'inicio': return <Inicio />;
+      case 'instalacion': return <Instalacion />;
+      case 'activedirectory': return <ActiveDirectory />;
+      case 'cliente': return <Cliente />;
+      case 'serviciosred': return <ServiciosRed />;
+      case 'gpo': return <Gpo />;
+      case 'prompts': return <Prompts />;
+      default: return <Inicio />;
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      <header className="bg-slate-900 text-white py-10 px-6 shadow">
-        <div className="max-w-4xl mx-auto flex items-center gap-4">
-          <Server size={40} className="text-red-400" />
-          <div>
-            <h1 className="text-3xl font-bold">
-              Wiki — Windows Server (Unidad 2)
-            </h1>
-            <p className="text-slate-300 mt-1">
-              TI3V35 — Sistemas Operativos
-            </p>
-          </div>
+    <div style={{ background: '#f4f6f9', minHeight: '100vh', fontFamily: 'sans-serif' }}>
+      {/* MENÚ SUPERIOR EXIGIDO POR LA EVALUACIÓN */}
+      <header style={{ background: '#0f172a', color: 'white', padding: '15px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <h1 style={{ margin: 0, fontSize: '20px' }}>Wiki — Windows Server (Unidad 2)</h1>
+          <p style={{ margin: 0, fontSize: '12px', color: '#94a3b8' }}>TI3V35 — Sistemas Operativos — Maribel Gonzalez</p>
         </div>
+        <nav style={{ display: 'flex', gap: '10px' }}>
+          <button onClick={() => setSeccionActual('inicio')} style={btnEstilo}>Inicio</button>
+          <button onClick={() => setSeccionActual('instalacion')} style={btnEstilo}>2.1.1 Instalación</button>
+          <button onClick={() => setSeccionActual('activedirectory')} style={btnEstilo}>2.1.2 AD & Objetos</button>
+          <button onClick={() => setSeccionActual('cliente')} style={btnEstilo}>2.1.3 Cliente Dom.</button>
+          <button onClick={() => setSeccionActual('serviciosred')} style={btnEstilo}>2.1.4 DNS/DHCP</button>
+          <button onClick={() => setSeccionActual('gpo')} style={btnEstilo}>2.1.5 GPO</button>
+          <button onClick={() => setSeccionActual('prompts')} style={btnEstilo}>Bitácora IA</button>
+        </nav>
       </header>
-      <main className="flex-1 max-w-4xl mx-auto px-6 py-12">
-        <div className="bg-white rounded-lg shadow p-8">
-          <div className="flex items-center gap-3 mb-4">
-            <BookOpen className="text-slate-700" />
-            <h2 className="text-xl font-semibold text-slate-800">
-              Bienvenida
-            </h2>
-          </div>
-          <p className="text-slate-600 leading-relaxed">
-            Guía paso a paso del laboratorio de Windows Server.
-            Cada criterio (2.1.1 a 2.1.5) se incorpora como un
-            componente en el menú superior.
-          </p>
-        </div>
+
+      <main style={{ padding: '30px', maxWidth: '1200px', margin: '0 auto' }}>
+        {renderPantalla()}
       </main>
-      <footer className="bg-slate-100 text-slate-600 text-sm py-4 px-6">
-        <div className="max-w-4xl mx-auto flex justify-between">
-          <span>Estudiante: Maribel Gonzalez</span>
-          <span>Docente: Rubén Schnettler L. — INACAP Valparaíso</span>
-        </div>
-      </footer>
     </div>
-  )
+  );
 }
 
-export default App
+const btnEstilo = {
+  background: '#334155',
+  color: 'white',
+  border: 'none',
+  padding: '8px 12px',
+  borderRadius: '4px',
+  cursor: 'pointer',
+  fontSize: '13px'
+};
